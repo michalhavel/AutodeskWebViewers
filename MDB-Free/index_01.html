@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design Bootstrap</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Autodesk C360 script -->
+    <style type="text/css">
+        div#myViewer {
+            position: relative;
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+
+    <script src="https://configurator360.autodesk.com/Script/v1/EmbeddedViewer"></script>
+
+</head>
+
+<body>
+
+    <!-- Main navigation -->
+    <header>
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark indigo">
+
+            <!-- Navbar brand -->
+            <a class="navbar-brand" href="#">CAD Studio a.s.</a>
+   
+            <!-- Collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Domů
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+
+                </ul>
+                <!-- Links -->
+
+                <!-- Search form -->
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Vyhledávání" aria-label="Search">
+                </form>
+            </div>
+            <!-- Collapsible content -->
+
+        </nav>
+        <!--/.Navbar-->
+    </header>
+    <!-- Main navigation -->
+
+    <!-- Main Layout -->
+    <main>
+        <!-- Main container -->
+        <div class="container-fluid blue-grey col-lg-5">
+            <!-- Grid column -->
+            <!-- Row -->
+            <div class="row blue">
+                <div class="animated jello">
+                    <h1>Modely:</h1>
+                </div>
+
+
+            </div>
+            <!-- Row -->
+
+            <!-- Row -->
+            <div class="row yellow">
+                <h3>Zvolte model k prohlížení:</h3>
+            </div>
+            <!-- Row -->
+
+            <!-- Row -->
+            <div class="row">
+                <!-- Animated -->
+                <div class="animated jello">
+                    <!-- <button> -->
+                    <div class="btn blue" id="btn1">
+                        Dopravník
+                    </div>
+                    <!-- <button onclick="myFunction()" id="btnModel11">Click me</button> -->
+                    <!-- </button> -->
+                </div>
+                <!-- Animated -->
+
+                <!-- Animated -->
+                <div class="animated jello">
+                    <!-- <button> -->
+                    <div class="btn red" id="btn2">
+                        Šroub
+                    </div>
+                    <!-- </button> -->
+                </div>
+
+                <!-- Animated -->
+
+
+            </div>
+            <!-- Row -->
+
+            <!-- Row -->
+            <div class="row">
+
+                <iframe id="frame" width="800" height="600" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
+                    frameborder="0">
+                </iframe>
+            </div>
+            <!-- Row -->
+
+            <!-- Row -->
+            <div class="row">
+                <br>
+                <br>
+            </div>
+            <!-- Row -->
+
+        </div>
+        <!-- Main container -->
+
+        <!-- Container -->
+        <div class="container-fluid ">
+            <div class="grid badge-elegant col-sm-6">
+                <!-- Row -->
+                <div class="row blue">
+                    <h1>Konfigurátory</h1>
+                </div>
+                <!-- Row -->
+
+                <!-- Row -->
+                <div class="row yellow">
+                    <h3>Zvolte konfigurátor:</h3>
+                </div>
+                <!-- Row -->
+
+                <!-- Row -->
+                <div class="row">
+                    <!-- <button> -->
+                    <div class="btn blue" id="btn3">
+                        Regály
+                    </div>
+                    <!-- </button> -->
+
+                    <!-- <button> -->
+                    <div class="btn red" id="btn4">
+                        Místnost
+                    </div>
+                    <!-- </button> -->
+
+                    <!-- <button> -->
+                    <div class="btn green" id="btn5">
+                        Okno
+                    </div>
+                    <!-- </button> -->
+                </div>
+                <!-- Row -->
+
+                <!-- Row -->
+                <div class="row" id="myViewer">
+
+                </div>
+                <!-- Row -->
+                
+            </div>
+
+
+        </div>
+        <!-- Container -->
+
+        <!-- script -->
+        <script type="text/javascript">
+            window.onload = function () {
+
+                var myEl1 = document.getElementById('btn1');
+
+                myEl1.addEventListener('click', function () {
+                    document.getElementById('frame').src =
+                        "https://myhub.autodesk360.com/ue29c8869/shares/public/SH7f1edQT22b515c761eea2b8900d48c165d?mode=embed";
+
+                });
+                var myEl2 = document.getElementById('btn2');
+
+                myEl2.addEventListener('click', function () {
+                    document.getElementById('frame').src =
+                        "https://myhub.autodesk360.com/ue29c8869/shares/public/SH7f1edQT22b515c761ebf78f4bcbd5a5b84?mode=embed";
+                });
+            };
+
+        </script>
+
+
+
+        <script type="text/javascript">
+            (function (window) {
+                "use strict";
+                var C360 = window.ADSK && window.ADSK.C360;
+
+                // callback for getPropertyValues.
+                function listProperties(result) {
+                    window.console.log(window.JSON.stringify(result, null, '  '));
+                }
+
+                // dummy implemenetation for handling error codes.
+                function reportError(code) {
+                    var state = C360.loadedState;
+                    if (code === state.GPUAccelerationDisabled) {
+                        window.alert('GPU hardware acceleration is disabled.');
+                    } else if (code === state.Not3DCapable) {
+                        window.alert('The graphics card is not 3D capable.');
+                    } else if (code === state.TemporarilyUnavailable) {
+                        window.alert('GPU acceleration is temporarily unavailable.');
+                    } else if (code === state.NotStandardsCompliant) {
+                        window.alert('The browser is not supported and probably needs to be updated.');
+                    } else if (code === state.Error) {
+                        window.alert('The viewer failed to load for an unknown reason.');
+                    }
+                }
+
+                // success handler
+                function viewerLoaded(viewer) {
+                    // The C360Viewer is loaded, do something with it.
+                    viewer.getPropertyValues(null, listProperties);
+                }
+
+                // error handler
+                function failedToLoad(viewer) {
+                    reportError(viewer.state);
+                    viewer.unload(); // Unload the C360Viewer
+                }
+
+                // Check if the API was loaded.
+                if (C360) { // Not supported on mobile devices currently.
+
+                    // Check client compatibility and load the viewer if compatible.
+                    C360.checkCompatibility(function (result) {
+                        if (result.compatible) {
+
+                            var myEl3 = document.getElementById('btn3');
+                            myEl3.addEventListener('click', function () {
+
+                                // Initialize the viewer
+                                C360.initViewer({
+                                    container: "myViewer",
+                                    design: "1037219241570006066/g553ewn3vz3x",
+                                    panes: true,
+                                    success: viewerLoaded, // Set success handler
+                                    error: failedToLoad // Set error handler
+                                });
+                            });
+
+                            var myEl4 = document.getElementById('btn4');
+                            myEl4.addEventListener('click', function () {
+
+                                // Initialize the viewer
+                                C360.initViewer({
+                                    container: "myViewer",
+                                    design: "1037219241570006066/ndxmtvvs7e6b",
+                                    panes: true,
+                                    success: viewerLoaded, // Set success handler
+                                    error: failedToLoad // Set error handler
+                                });
+                            });
+
+                            var myEl5 = document.getElementById('btn5');
+                            myEl5.addEventListener('click', function () {
+
+                                // Initialize the viewer
+                                C360.initViewer({
+                                    container: "myViewer",
+                                    design: "1037219241570006066/w1xlbwehzs81",
+                                    panes: true,
+                                    success: viewerLoaded, // Set success handler
+                                    error: failedToLoad // Set error handler
+                                });
+                            });
+
+
+
+                        } else {
+                            reportError(result.reason);
+                        }
+                    });
+
+                }
+            }(this));
+        </script>
+
+
+
+        <!-- script -->
+
+        <!-- Grid column -->
+
+
+    </main>
+    <!-- Main Layout -->
+
+    <!-- Footer -->
+    <footer>
+
+    </footer>
+    <!-- Footer -->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Bootstrap main -->
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design Bootstrap</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- The Viewer CSS -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css" type="text/css">
+
+    <!-- Developer CSS -->
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #MyViewerDiv {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            margin: 0;
+            background-color: #F0F8FF;
+            align-content: center;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* #MyNextButton {
+            position: relative;
+            top: 5px;
+            left: 5px;
+            z-index: 1;
+            font-size: 40px;
+            cursor: pointer;
+        } */
+    </style>
+
+    <!-- <style type="text/css"> -->
+    <!-- div#myViewer { -->
+    <!-- position: relative;
+            width: 100%;
+            height: 600px;
+            align-content: center;
+            text-align: center;
+            vertical-align: middle; -->
+    <!-- } -->
+    <!-- </style> -->
+
+    <!-- <style>
+        body {
+            background: url(image.jpg);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 100%;
+        }
+    </style> -->
+
+    <!-- <script src="https://configurator360.autodesk.com/Script/v1/EmbeddedViewer"></script> -->
+</head>
+
+<body class="stylish-color-dark">
+    <!-- Main navigation -->
+    <header>
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+
+            <!-- Navbar brand -->
+            <a class="navbar-brand" href="https://www.cadstudio.cz/">
+                <img src="img/CS2-loga/CadStudio_horizontal_800t.png" alt="" width="20%">
+            </a>
+
+            <!-- Collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Domů</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://blog.cadstudio.cz/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://shop.cadstudio.cz/">eShop</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="forge.html">Forge
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="testforge.html">Test FORGE</a>
+                    </li>
+
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
+                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+
+                </ul>
+                <!-- Links -->
+
+                <!-- Search form -->
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Hledat" aria-label="Search">
+                </form>
+            </div>
+            <!-- Collapsible content -->
+
+        </nav>
+        <!--/.Navbar-->
+    </header>
+    <!-- Main navigation -->
+
+    <!-- Main layout -->
+    <main>
+
+        <br>
+        <br>
+        <br>
+        <!-- Main container -->
+        <div class="container">
+            <!-- Model container -->
+
+            <div class="container blue">
+                <br>
+                <h1 class="text-center white-text green">Forge prohlížeč</h1>
+                <br>
+
+                <center>
+                    <div class="row" id="MyViewerDiv"></div>
+                    <!-- <div id="MyViewerDiv"></div> -->
+
+                </center>
+
+
+
+
+                <!-- Row -->
+                <div class="text-center">
+                    <!-- <button> -->
+                    <div class="btn bg-blue" id="btn1">
+                        Robotická svařovna
+                    </div>
+
+                    <div class="btn bg-blue" id="btn2">
+                        Hřídel
+                    </div>
+
+                    <div class="btn bg-blue" id="btn3">
+                        Židle - zkusit btn NEXT
+                    </div>
+
+                    <!-- <button onclick="myFunction()" id="btnModel11">Click me</button> -->
+                    <!-- </button> -->
+                    <div class="btn bg-blue" id="MyNextButton" onclick="loadNextModel()">Next!</div>
+
+                </div>
+                <br>
+                <!-- Row -->
+            </div>
+
+            <!-- Model container -->
+            <br>
+            <br>
+
+
+    </main>
+    <!-- Main layout -->
+    <br>
+    <!-- <a class="blue" href="https://developer.api.autodesk.com/authentication/v1/authorize?response_type=code&client_id=obQDn8P0GanGFQha4ngKKVWcxwyvFAGE&redirect_uri=http%3A%2F%2Fsampleapp.com%2Foauth%2Fcallback%3Ffoo%3Dbar&scope=data:read">Click here to grant access to your data!</a> -->
+    <br>
+    <!-- Footer -->
+    <footer class="page-footer indigo center-on-small-only pt-0">
+
+        <!--Footer Links-->
+        <div class="container">
+
+            <!--First row-->
+            <div class="row">
+
+                <!--First column-->
+                <div class="col-md-12">
+
+                    <div class="footer-socials mb-5 flex-center">
+
+                        <!--Facebook-->
+                        <a class="icons-sm fb-ic">
+                            <i class="fa fa-facebook fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Twitter-->
+                        <a class="icons-sm tw-ic">
+                            <i class="fa fa-twitter fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Google +-->
+                        <a class="icons-sm gplus-ic">
+                            <i class="fa fa-google-plus fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Linkedin-->
+                        <a class="icons-sm li-ic">
+                            <i class="fa fa-linkedin fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Instagram-->
+                        <a class="icons-sm ins-ic">
+                            <i class="fa fa-instagram fa-lg white-text mr-md-4"> </i>
+                        </a>
+                        <!--Pinterest-->
+                        <a class="icons-sm pin-ic">
+                            <i class="fa fa-pinterest fa-lg white-text"> </i>
+                        </a>
+                    </div>
+                </div>
+                <!--/First column-->
+            </div>
+            <!--/First row-->
+        </div>
+        <!--/Footer Links-->
+
+        <!--Copyright-->
+        <div class="footer-copyright">
+            <div class="container-fluid">
+                © 2018 Copyright:
+                <a href="https://www.cadstudio.cz"> CADStudio.cz </a>
+            </div>
+        </div>
+        <!--/Copyright-->
+
+
+    </footer>
+    <!-- Footer -->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- The Viewer JS -->
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js"></script>
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js"></script>
+    <!-- Developer JS Forge Viewer -->
+    <script type = "text/javascript" src="js/oauth.js"></script>
+    <script type="text/javascript" src="js/forge.viewer.js"></script>
+    
+    
+</body>
+
+</html>

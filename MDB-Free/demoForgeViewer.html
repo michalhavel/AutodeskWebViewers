@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="Autodesk, Forge, TU Darmstadt, IIB, Numerische Methoden, Informatik im Bauwesen, BIM, Forge, Revit, Workshop">
+    <title>BIM@TUDa</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <!-- <link rel="stylesheet" href="css/bootstrap-3.1.1.min.css" type="text/css">
+    <link rel="stylesheet" href="css/tabStyle.css" type="text/css"> -->
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <!-- <link rel="stylesheet" href="css/jquery.countdown.css" type="text/css"> -->
+    <!-- <link rel="stylesheet" href="css/lightbox.css" type="text/css"> -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.min.css" type="text/css">
+    <!-- <link rel="stylesheet" href="css/iibForgeViewer.css" type="text/css"> -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" type="text/css">
+    <!-- <link rel="stylesheet" href="css/font-awesome.css" type="text/css"> -->
+    <!-- <script src="js/jquery.min.js"></script> -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- <script src="js/jscoord-1.1.1.js"></script> -->
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script>
+        $(document).ready(function () {
+            $(".dropdown").hover(
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                    $(this).toggleClass('open');
+                },
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                    $(this).toggleClass('open');
+                }
+            );
+        });
+    </script>
+    <script src="https://ase-cdn.autodesk.com/adp/v1.0.3/js/adp-web-analytics-sdk.min.js"></script>
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/wgs.min.js"></script>
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/FirstPerson/FirstPerson.min.js"></script>
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Measure/Measure.min.js"></script>
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Section/Section.min.js"></script>
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Hyperlink/Hyperlink.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Section/Section.min.css">
+    <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Hyperlink/Hyperlink.min.css">
+    <link rel="stylesheet" type="text/css" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/extensions/Measure/Measure.min.css">
+</head>
+
+<body>
+
+    <div class="features">
+        <div class="container">
+            <div class="MyViewerDiv" style="height: 800px;">
+                <div class="adsk-viewing-viewer notouch dark-theme quality-text" style="height: 100%; width: 100%; overflow:hidden;">
+                    <div class="canvas-wrap">
+                        <div class="orbit-gizmo noselect" style="display: none;">
+                            <div class="outside"></div>
+                            <div class="ring"></div>
+                            <div class="layout-hor">
+                                <div class="edgemark-area">
+                                    <div class="edgemark"></div>
+                                </div>
+                            </div>
+                            <div class="layout-mid">
+                                <div class="layout-ver">
+                                    <div class="edgemark-area">
+                                        <div class="edgemark"></div>
+                                    </div>
+                                </div>
+                                <div class="circle">
+                                    <div class="crosshair-area">
+                                        <div class="crosshair-v"></div>
+                                        <div class="crosshair-h"></div>
+                                    </div>
+                                </div>
+                                <div class="layout-ver">
+                                    <div class="edgemark-area">
+                                        <div class="edgemark"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layout-hor">
+                                <div class="edgemark-area">
+                                    <div class="edgemark"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <canvas tabindex="0" data-viewer-canvas="true" width="152" height="719" style="width: 170px; height: 800px; cursor: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAt1BMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8AAAAzMzP6+vri4uISEhKKioqtra2dnZ2EhIR9fX10dHRkZGQdHR3t7e3Hx8e5ubm1tbWoqKhWVlZKSko4ODgICAjv7+/o6OjMzMyxsbFOTk4pKSkXFxcEBAT29vbW1tZ6enpISEgLCwvhzeX+AAAAGXRSTlMANRO0nHRJHfnskIxQRKh89syDVwTWZjEJxPFEswAAAOFJREFUKM+1j+lygkAQhIflEAJe0Rw9u4CCeKKoSTTX+z9XoMJWWeX+ssrvZ3f19DQ5zOw/0DUMQPlmQ72bE2adBp8/Rp3CQUi3ILx+bxj4fjDs9T1Bmo6bbPPN8aDU4bjJt4nb+de789kSFyxn826jW3ICLNZZKU8nWWbrBTCRVm04U8TpjquRFf1Go0d7l8aYOrUR7FGEFr1S9LGymwthgX2gE/Kl0cHPOtF2xOWZ5QpIC93RflW4InkDoPRXesd5LJIMQPzV7tCMa7f6BvhJL79AVDmYTNQ1NhnxbI/uwB8H5Bjd4zQPBAAAAABJRU5ErkJggg==&quot;), auto;"></canvas>
+                    </div>
+                    <div class="spinner" style="display: none;">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                    <div id="guiviewer3d-toolbar" class="adsk-control adsk-toolbar" style="display: block;">
+                        <div id="navTools" class="adsk-control adsk-control-group">
+                            <div id="toolbar-orbitTools" class="adsk-control adsk-button inactive" style="display: none;">
+                                <div id="toolbar-orbitToolsarrow" class="adsk-control inactive adsk-button-arrow">
+                                    <div class="adsk-button-icon"></div>
+                                </div>
+                                <div id="toolbar-orbitToolsSubMenu" class="adsk-control adsk-control-group toolbar-vertical-group adsk-hidden">
+                                    <div class="clickoff" style="position:fixed; top:0; left:0; width:100vw; height:100vh;"></div>
+                                    <div id="toolbar-freeOrbitTool" class="adsk-control adsk-button inactive">
+                                        <div class="adsk-button-icon adsk-icon-orbit-free"></div>
+                                        <div id="toolbar-freeOrbitTool-tooltip" class="adsk-control-tooltip" data-i18n="Free orbit" tooltiptext="Free orbit">Volný orbit</div>
+                                    </div>
+                                    <div id="toolbar-orbitTool" class="adsk-control adsk-button inactive">
+                                        <div class="adsk-button-icon adsk-icon-orbit-constrained"></div>
+                                        <div id="toolbar-orbitTool-tooltip" class="adsk-control-tooltip" data-i18n="Orbit" tooltiptext="Orbit">Orbit</div>
+                                    </div>
+                                </div>
+                                <div class="adsk-button-icon adsk-icon-orbit-constrained"></div>
+                                <div id="toolbar-orbitTools-tooltip" class="adsk-control-tooltip" data-i18n="Orbit" tooltiptext="Orbit">Orbit</div>
+                            </div>
+                            <div id="toolbar-panTool" class="adsk-control adsk-button inactive" style="display: none;">
+                                <div class="adsk-button-icon adsk-icon-pan"></div>
+                                <div id="toolbar-panTool-tooltip" class="adsk-control-tooltip" data-i18n="Pan" tooltiptext="Pan">Posun pohledu</div>
+                            </div>
+                            <div id="toolbar-zoomTool" class="adsk-control adsk-button inactive" style="display: none;">
+                                <div class="adsk-button-icon adsk-icon-zoom"></div>
+                                <div id="toolbar-zoomTool-tooltip" class="adsk-control-tooltip" data-i18n="Zoom" tooltiptext="Zoom">Přiblížit</div>
+                            </div>
+                            <div id="toolbar-firstPersonTool" class="adsk-control adsk-button inactive" style="display: none;">
+                                <div class="adsk-button-icon adsk-icon-first-person"></div>
+                                <div id="toolbar-firstPersonTool-tooltip" class="adsk-control-tooltip" data-i18n="First person" tooltiptext="First person">První osoba</div>
+                            </div>
+                            <div id="toolbar-cameraSubmenuTool" class="adsk-control adsk-button inactive" style="display: none;">
+                                <div id="toolbar-cameraSubmenuToolarrow" class="adsk-control inactive adsk-button-arrow">
+                                    <div class="adsk-button-icon"></div>
+                                </div>
+                                <div id="toolbar-cameraSubmenuToolSubMenu" class="adsk-control adsk-control-group toolbar-vertical-group adsk-hidden">
+                                    <div class="clickoff" style="position:fixed; top:0; left:0; width:100vw; height:100vh;"></div>
+                                    <div id="toolbar-fitToViewTool" class="adsk-control adsk-button inactive" style="display: block;">
+                                        <div class="adsk-button-icon adsk-icon-fit-to-view"></div>
+                                        <div id="toolbar-fitToViewTool-tooltip" class="adsk-control-tooltip" data-i18n="Fit to view" tooltiptext="Fit to view">Přizpůsobit pohledu (F)</div>
+                                    </div>
+                                    <div id="toolbar-focalLengthTool" class="adsk-control adsk-button inactive" style="display: block;">
+                                        <div class="adsk-button-icon adsk-icon-fov"></div>
+                                        <div id="toolbar-focalLengthTool-tooltip" class="adsk-control-tooltip" data-i18n="Focal length" tooltiptext="Focal length">Ohnisková vzdálenost (Ctrl + Shift přetáhnutí)</div>
+                                    </div>
+                                    <div id="toolbar-rollTool" class="adsk-control adsk-button inactive" style="display: block;">
+                                        <div class="adsk-button-icon adsk-icon-roll"></div>
+                                        <div id="toolbar-rollTool-tooltip" class="adsk-control-tooltip" data-i18n="Roll" tooltiptext="Roll">Rolovat (Alt + Shift přetáhnutí)</div>
+                                    </div>
+                                </div>
+                                <div class="adsk-button-icon adsk-icon-camera"></div>
+                                <div id="toolbar-cameraSubmenuTool-tooltip" class="adsk-control-tooltip" data-i18n="Camera interactions" tooltiptext="Camera interactions">Interakce kamery</div>
+                            </div>
+                        </div>
+                        <div id="measureTools" class="adsk-control adsk-control-group adsk-hidden">
+                            <div id="toolbar-measureTool-simple-distance" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-measure-distance-new"></div>
+                                <div id="toolbar-measureTool-simple-distance-tooltip" class="adsk-control-tooltip" data-i18n="Distance" tooltiptext="Distance">Vzdálenost</div>
+                            </div>
+                            <div id="toolbar-measureTool-angle" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-measure-angle-new"></div>
+                                <div id="toolbar-measureTool-angle-tooltip" class="adsk-control-tooltip" data-i18n="Angle" tooltiptext="Angle">Úhel</div>
+                            </div>
+                            <div id="toolbar-calibrationTool" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-measure-calibration"></div>
+                                <div id="toolbar-calibrationTool-tooltip" class="adsk-control-tooltip" data-i18n="Calibrate" tooltiptext="Calibrate">Kalibrovat</div>
+                            </div>
+                            <div class="measure-toolbar-seperator"></div>
+                            <div id="toolbar-delete" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-measure-trash"></div>
+                                <div id="toolbar-delete-tooltip" class="adsk-control-tooltip" data-i18n="Delete measurement" tooltiptext="Delete measurement">Odstranit měření</div>
+                            </div>
+                            <div class="docking-panel docking-panel-container-solid-color-b measure-settings-popup" style="display: none;">
+                                <table class="adsk-lmv-tftable calibration-table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div data-i18n="Unit type">Typ jednotky</div>
+                                            </td>
+                                            <td style="padding-left: 5px; padding-right: 5px;">
+                                                <select id="Unit type_dropdown" class="option-drop-down">
+                                                    <option value="0" data-i18n="Unknown" style="display: none;">Neznámé</option>
+                                                    <option value="1" data-i18n="Decimal feet">Desetiny stop</option>
+                                                    <option value="2" data-i18n="Feet and fractional inches">Stopy a zlomky palců</option>
+                                                    <option value="3" data-i18n="Feet and decimal inches">Stopy a palce desítkově</option>
+                                                    <option value="4" data-i18n="Decimal inches">Desetiny palců</option>
+                                                    <option value="5" data-i18n="Fractional inches">Zlomky palců</option>
+                                                    <option value="6" data-i18n="Meters">Metry</option>
+                                                    <option value="7" data-i18n="Centimeters">Centimetry</option>
+                                                    <option value="8" data-i18n="Millimeters">Milimetry</option>
+                                                    <option value="9" data-i18n="Meters and centimeters">Metry a centimetry</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div data-i18n="Precision">Přesnost</div>
+                                            </td>
+                                            <td style="padding-left: 5px; padding-right: 5px;">
+                                                <select id="Precision_dropdown" class="option-drop-down">
+                                                    <option value="0">0</option>
+                                                    <option value="1">0.1</option>
+                                                    <option value="2">0.01</option>
+                                                    <option value="3">0.001</option>
+                                                    <option value="4">0.0001</option>
+                                                    <option value="5">0.00001</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div data-i18n="Isolate measurement">Izolovat měření</div>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" id="Isolate measurement_check">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="toolbar-settings" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-measure-settings"></div>
+                                <div id="toolbar-settings-tooltip" class="adsk-control-tooltip" data-i18n="Measure settings" tooltiptext="Measure settings">Nastavení měření</div>
+                            </div>
+                            <div id="toolbar-measureTool-done" class="adsk-control adsk-button inactive adsk-label-button">
+                                <div class="adsk-button-icon" style="display: none;"></div>
+                                <div id="toolbar-measureTool-done-tooltip" class="adsk-control-tooltip" data-i18n="Hotovo" tooltiptext="Hotovo">Hotovo</div>
+                                <label>Hotovo</label>
+                            </div>
+                        </div>
+                        <div id="modelTools" class="adsk-control adsk-control-group">
+                            <div id="toolbar-measurementSubmenuTool" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-measure"></div>
+                                <div id="toolbar-measurementSubmenuTool-tooltip" class="adsk-control-tooltip" data-i18n="Measure" tooltiptext="Measure">Měřit</div>
+                            </div>
+                            <div id="toolbar-sectionTool" class="adsk-control adsk-button inactive" style="display: none;">
+                                <div id="toolbar-sectionToolarrow" class="adsk-control inactive adsk-button-arrow">
+                                    <div class="adsk-button-icon"></div>
+                                </div>
+                                <div id="toolbar-sectionToolSubMenu" class="adsk-control adsk-control-group toolbar-vertical-group adsk-hidden">
+                                    <div class="clickoff" style="position:fixed; top:0; left:0; width:100vw; height:100vh;"></div>
+                                    <div id="toolbar-sectionTool-x" class="adsk-control adsk-button inactive">
+                                        <div class="adsk-button-icon adsk-icon-plane-x"></div>
+                                        <div id="toolbar-sectionTool-x-tooltip" class="adsk-control-tooltip" data-i18n="Add X plane" tooltiptext="Add X plane">Přidat rovinu X</div>
+                                    </div>
+                                    <div id="toolbar-sectionTool-y" class="adsk-control adsk-button inactive">
+                                        <div class="adsk-button-icon adsk-icon-plane-z"></div>
+                                        <div id="toolbar-sectionTool-y-tooltip" class="adsk-control-tooltip" data-i18n="Add Y plane" tooltiptext="Add Y plane">Přidat rovinu Y</div>
+                                    </div>
+                                    <div id="toolbar-sectionTool-z" class="adsk-control adsk-button inactive">
+                                        <div class="adsk-button-icon adsk-icon-plane-y"></div>
+                                        <div id="toolbar-sectionTool-z-tooltip" class="adsk-control-tooltip" data-i18n="Add Z plane" tooltiptext="Add Z plane">Přidat rovinu Z</div>
+                                    </div>
+                                    <div id="toolbar-sectionTool-box" class="adsk-control adsk-button inactive">
+                                        <div class="adsk-button-icon adsk-icon-box"></div>
+                                        <div id="toolbar-sectionTool-box-tooltip" class="adsk-control-tooltip" data-i18n="Add box" tooltiptext="Add box">Přidat pole</div>
+                                    </div>
+                                </div>
+                                <div class="adsk-button-icon adsk-icon-section-analysis"></div>
+                                <div id="toolbar-sectionTool-tooltip" class="adsk-control-tooltip" data-i18n="Section analysis" tooltiptext="Section analysis">Analýza řezu</div>
+                            </div>
+                            <div id="toolbar-explodeTool" class="adsk-control adsk-button inactive" style="display: none;">
+                                <div class="adsk-button-icon adsk-icon-explode"></div>
+                                <div id="toolbar-explodeTool-tooltip" class="adsk-control-tooltip" data-i18n="Explode model" tooltiptext="Explode model">Rozložit model</div>
+                                <div class="docking-panel docking-panel-container-solid-color-b explode-submenu" style="display:none">
+                                    <input class="explode-slider" type="range" min="0" max="1" step="0.01" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="settingsTools" class="adsk-control adsk-control-group">
+                            <div id="toolbar-modelStructureTool" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-structure"></div>
+                                <div id="toolbar-modelStructureTool-tooltip" class="adsk-control-tooltip" data-i18n="Model browser" tooltiptext="Model browser">Prohlížeč modelu</div>
+                            </div>
+                            <div id="toolbar-propertiesTool" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-properties"></div>
+                                <div id="toolbar-propertiesTool-tooltip" class="adsk-control-tooltip" data-i18n="Properties" tooltiptext="Properties">Vlastnosti</div>
+                            </div>
+                            <div id="toolbar-settingsTool" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-settings"></div>
+                                <div id="toolbar-settingsTool-tooltip" class="adsk-control-tooltip" data-i18n="Settings" tooltiptext="Settings">Nastavení</div>
+                            </div>
+                            <div id="toolbar-fullscreenTool" class="adsk-control adsk-button inactive">
+                                <div class="adsk-button-icon adsk-icon-fullscreen"></div>
+                                <div id="toolbar-fullscreenTool-tooltip" class="adsk-control-tooltip" data-i18n="Full screen" tooltiptext="Full screen">Celá obrazovka</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progressbg" style="visibility: hidden;">
+                        <div class="progressfg" style="width: 102.545px;"></div>
+                    </div>
+                    <div class="message-panel docking-panel focal-length docking-panel-container-solid-color-b" style="visibility: hidden;">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="name" data-i18n="Focal Length">Ohnisková vzdálenost</td>
+                                    <td class="value"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="ViewerModelStructurePanel" class="docking-panel model-structure-panel" style="resize: none; display: none; max-height: 800px; max-width: 703.333px; top: 10px; left: 10px; height: calc(100% - 79.9306px);">
+                        <div class="docking-panel-title" data-i18n="Model">Model</div>
+                        <div class="docking-panel-close"></div>
+                        <div class="docking-panel-footer">
+                            <div class="docking-panel-footer-resizer"></div>
+                        </div>
+                        <div class="docking-panel-scroll docking-panel-container-solid-color-a" id="ViewerModelStructurePanel-scroll-container" style="height: calc(100% - 104px); overflow-x: hidden;">
+                            <div class="docking-panel-container-gradient treeview on-demand" style="height: 540px; width: calc(100% + 0px);">
+                                <div style="border: 0px; margin: 0px; padding: 0px; height: 0px;"></div>
+                                <div class="model-div" lmv-modelid="1">
+                                    <div lmv-nodeid="3858" class="ancestor-selected expanded group visible">
+                                        <lmvheader style="padding-left: 13px;">
+                                            <icon></icon>
+                                            <div class="visibility"></div>
+                                            <label>Geschossdecken</label>
+                                        </lmvheader>
+                                    </div>
+                                    <div lmv-nodeid="3859" class="ancestor-selected expanded group visible">
+                                        <lmvheader style="padding-left: 38px;">
+                                            <icon></icon>
+                                            <div class="visibility"></div>
+                                            <label>Geschossdecke</label>
+                                        </lmvheader>
+                                    </div>
+                                    <div lmv-nodeid="3860" class="ancestor-selected expanded group visible">
+                                        <lmvheader style="padding-left: 63px;">
+                                            <icon></icon>
+                                            <div class="visibility"></div>
+                                            <label>STB 20.0</label>
+                                        </lmvheader>
+                                    </div>
+                                    <div lmv-nodeid="3861" class="leaf visible">
+                                        <lmvheader style="padding-left: 88px;">
+                                            <icon></icon>
+                                            <div class="visibility"></div>
+                                            <label>Geschossdecke [390616]</label>
+                                        </lmvheader>
+                                    </div>
+                                    <div lmv-nodeid="3884" class="collapsed group visible">
+                                        <lmvheader style="padding-left: 63px;">
+                                            <icon></icon>
+                                            <div class="visibility"></div>
+                                            <label>Wände</label>
+                                        </lmvheader>
+                                    </div>
+                                    <div lmv-nodeid="3918" class="collapsed group visible">
+                                        <lmvheader style="padding-left: 63px;">
+                                            <icon></icon>
+                                            <div class="visibility"></div>
+                                            <label>Tragwerksstützen</label>
+                                        </lmvheader>
+                                    </div>
+                                    <div lmv-nodeid="4005" class="collapsed group visible">
+                                        <lmvheader style="padding-left: 63px;">
+                                            <icon></icon>
+                                            <div class="visibility"></div>
+                                            <label>Fenster</label>
+                                        </lmvheader>
+                                    </div>
+                                    <div lmv-nodeid="4251" class="collapsed group visible">
+                                        <lmvheader style="padding-left: 63px;">
+                                            <icon></icon>
+                                            <div class="visibility"></div>
+                                            <label>Türen</label>
+                                        </lmvheader>
+                                    </div>
+                                    <div lmv-nodeid="4551" class="collapsed group visible">
+                                        <lmvheader style="padding-left: 63px;">
+                                            <icon></icon>
+                                            <div class="visibility"></div>
+                                            <label>Profilierte Wände</label>
+                                        </lmvheader>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ViewerModelStructurePanel-Searchbox" class="adsk-control adsk-searchbox empty">
+                            <div class="docking-panel adsk-search-results" style="resize: none; display: none;">
+                                <div class="docking-panel-scroll docking-panel-container-solid-color-b">
+                                    <div class="adsk-search-results-scrolling-panel">
+                                        <div class="no-results-container" style="display: none;">
+                                            <div data-i18n="No Results" class="no-results-title">Žádné výsledky</div>
+                                            <div data-i18n="Try another term" class="no-results-description">Zkuste hledat jiný termín</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docking-panel-footer">
+                                    <div class="docking-panel-footer-resizer"></div>
+                                </div>
+                            </div>
+                            <input class="search-box docking-panel-delimiter-shadow" type="search" placeholder="Hledat" data-i18n="Search" incremental="">
+                            <div class="search-box-icon"></div>
+                            <div class="search-box-close"></div>
+                        </div>
+                    </div>
+                    <div id="ViewerSettingsPanel0-0" class="docking-panel viewer-settings-panel" style="resize: none; display: none; max-width: 703px; min-width: 400px; top: 10px; left: 303px; position: absolute; max-height: 750px; height: 715px;">
+                        <div class="docking-panel-title" data-i18n="Settings">Nastavení</div>
+                        <div class="docking-panel-close"></div>
+                        <div class="docking-panel-footer">
+                            <div class="docking-panel-footer-resizer"></div>
+                        </div>
+                        <div class="docking-panel-container-solid-color-b settings-tabs docking-panel-delimiter-shadow">
+                            <ul>
+                                <li id="ViewerSettingsPanel0-0-navigationtab" class="navigation">
+                                    <a>
+                                        <span data-i18n="Navigation">Navigace</span>
+                                    </a>
+                                </li>
+                                <li id="ViewerSettingsPanel0-0-performancetab" class="performance tabselected selectedmouseout">
+                                    <a>
+                                        <span data-i18n="Performance">Výkon</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="docking-panel-scroll docking-panel-container-solid-color-a right" id="ViewerSettingsPanel0-0-scroll-container"
+                            style="height: calc(100% - 158px);">
+                            <table id="ViewerSettingsPanel0-0-navigationtab-table" class="settings-table adsk-lmv-tftable navigation" style="display: none;">
+                                <tbody>
+                                    <tr class="logical-group">
+                                        <td>
+                                            <div data-i18n="Navigation and selection">Navigace a výběr</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Navigation and selection_check" style="display: none;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Show ViewCube">Zobrazit nástroj ViewCube</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Show ViewCube_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="ViewCube acts on pivot">ViewCube působí na bod otáčení</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="ViewCube acts on pivot_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Zoom towards pivot">Zoom směrem k bodu otáčení</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Zoom towards pivot_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Set pivot with left mouse button">Nastavit bod otáčení levým tlačítkem myši</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Set pivot with left mouse button_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Fusion style orbit">Orbit ve stylu Fusion</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Fusion style orbit_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Reverse mouse zoom direction">Obrátit směr přiblížení myši</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Reverse mouse zoom direction_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Orbit past world poles">Orbit za globální póly</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Orbit past world poles_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Open properties on select">Otevřít vlastnosti při výběru</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Open properties on select_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Left handed mouse setup">Nastavení myši pro leváky</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Left handed mouse setup_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="New First Person Tool Prototype">Prototyp nového nástroje First Person</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="New First Person Tool Prototype_check">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table id="ViewerSettingsPanel0-0-performancetab-table" class="settings-table adsk-lmv-tftable performance" style="display: table;">
+                                <tbody>
+                                    <tr class="logical-group">
+                                        <td>
+                                            <div data-i18n="Performance Optimization">Optimalizace výkonu</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Performance Optimization_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Smooth navigation">Plynulá navigace</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Smooth navigation_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Progressive model display">Progresivní zobrazení modelu</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Progressive model display_check">
+                                        </td>
+                                    </tr>
+                                    <tr class="logical-group">
+                                        <td>
+                                            <div data-i18n="Visual Quality Optimization">Optimalizace kvality zobrazení</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Visual Quality Optimization_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Anti-aliasing">Vyhlazení</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Anti-aliasing_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Ambient shadows">Okolní stíny</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Ambient shadows_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Ground shadow">Vržený stín</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Ground shadow_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Ground reflection">Odraz na zemi</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Ground reflection_check">
+                                        </td>
+                                    </tr>
+                                    <tr class="logical-group">
+                                        <td colspan="2" style="padding-left: 10px; padding-right: 10px;">
+                                            <div data-i18n="Viewer Behavior">Chování prohlížeče</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Ghost hidden objects">Stínované skryté objekty</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Ghost hidden objects_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Display Lines">Zobrazit čáry</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Display Lines_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Display Points">Zobrazit body</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Display Points_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Display edges">Zobrazit hrany</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Display edges_check">
+                                        </td>
+                                    </tr>
+                                    <tr class="logical-group">
+                                        <td colspan="2" style="padding-left: 10px; padding-right: 10px;">
+                                            <div data-i18n="Environment">Prostředí</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div data-i18n="Environment Image Visible">Viditelnost obrázku prostředí</div>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="Environment Image Visible_check">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div data-i18n="Environment and Lighting Selection">Výběr prostředí a osvětlení</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="padding-left: 5px; padding-right: 5px;">
+                                            <select id="Environment and Lighting Selection_dropdown" class="option-drop-down tabcell">
+                                                <option value="0" data-i18n="Simple Grey">Jednoduché šedá</option>
+                                                <option value="1" data-i18n="Sharp Highlights">Ostré zvýraznění</option>
+                                                <option value="2" data-i18n="Dark Sky">Tmavá obloha</option>
+                                                <option value="3" data-i18n="Grey Room">Šedá místnost</option>
+                                                <option value="4" data-i18n="Photo Booth">Fotokabina</option>
+                                                <option value="5" data-i18n="Tranquility">Poklid</option>
+                                                <option value="6" data-i18n="Infinity Pool">Hlubina nekonečna</option>
+                                                <option value="7" data-i18n="Simple White">Jednoduchá bílá</option>
+                                                <option value="8" data-i18n="Riverbank">Nábřeží</option>
+                                                <option value="9" data-i18n="Contrast">Kontrast</option>
+                                                <option value="10" data-i18n="Rim Highlights">Zvýraznění okraje</option>
+                                                <option value="11" data-i18n="Cool Light">Studené světlo</option>
+                                                <option value="12" data-i18n="Warm Light">Teplé světlo</option>
+                                                <option value="13" data-i18n="Soft Light">Měkké světlo</option>
+                                                <option value="14" data-i18n="Grid Light">Světelná mřížka</option>
+                                                <option value="15" data-i18n="Plaza">Náměstí</option>
+                                                <option value="16" data-i18n="Snow Field">Zasněžené pole</option>
+                                                <option value="17" data-i18n="Field">Pole</option>
+                                                <option value="18" data-i18n="Boardwalk">Chodník</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="docking-panel-container-solid-color-b restore-defaults-container">
+                            <div class="docking-panel-tertiary-button" data-i18n="Restore default settings">Obnovit výchozí nastavení</div>
+                        </div>
+                    </div>
+                    <div class="viewcube">
+                        <div class="viewcube" style="opacity: 0.5; display: block;">
+                            <canvas width="134" height="134" style="width: 150px; height: 150px;"></canvas>
+                        </div>
+                        <div class="homeViewWrapper"></div>
+                    </div>
+                    <div id="calibration-panel" class="docking-panel calibration-panel" style="display: none; left: 0px; top: 0px; resize: none;">
+                        <div class="docking-panel-title" data-i18n="Calibration">Kalibrace</div>
+                        <div class="docking-panel-close"></div>
+                        <div class="docking-panel-scroll docking-panel-container-solid-color-a right" id="calibration-panel-scroll-container" style="height: calc(100% - 50px);">
+                            <div>
+                                <table class="adsk-lmv-tftable calibration-table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div data-i18n="Define Size">Definovat velikost</div>
+                                            </td>
+                                            <td>
+                                                <input class="docking-panel-textbox" type="text" autofocus="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div data-i18n="Unit type">Typ jednotky</div>
+                                            </td>
+                                            <td style="padding-left: 5px; padding-right: 5px;">
+                                                <select id="Unit type_dropdown" class="option-drop-down">
+                                                    <option value="0" data-i18n="Feet and fractional inches">Stopy a zlomky palců</option>
+                                                    <option value="1" data-i18n="Feet and decimal inches">Stopy a palce desítkově</option>
+                                                    <option value="2" data-i18n="Meters">Metry</option>
+                                                    <option value="3" data-i18n="Centimeters">Centimetry</option>
+                                                    <option value="4" data-i18n="Millimeters">Milimetry</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="docking-panel-primary-button calibration-button" data-i18n="Set Calibration">Nastavit kalibraci</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Viewer JS -->
+            <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/three.min.js"></script>
+            <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
+
+            <!-- Developer JS -->
+            <script>
+                var viewer;
+                var options = {
+                    env: 'AutodeskProduction',
+                    accessToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6Imp3dF9zeW1tZXRyaWNfa2V5In0.eyJjbGllbnRfaWQiOiI5OEdCaHZvQnowTVM5cmhlUmQxcU15Zk1HakJDZm1QNiIsImV4cCI6MTUxOTgyNTM2Nywic2NvcGUiOlsiZGF0YTpyZWFkIiwiZGF0YTp3cml0ZSIsImRhdGE6Y3JlYXRlIiwiYnVja2V0OmNyZWF0ZSIsImJ1Y2tldDpyZWFkIl0sImF1ZCI6Imh0dHBzOi8vYXV0b2Rlc2suY29tL2F1ZC9qd3RleHA2MCIsImp0aSI6ImRLekV4eENYRVBsUGtvNlVoZUNUQWVGRW9SY0FLOVZJRHVXTXFwd0dxRU16SlRBUUwyakMxeGhBeEt0MXhGdWMifQ.m15YKpfP51Us1pDjki2i64fEX3R6P-alNyowSh4-0Vw'
+                };
+                var documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTAyLTI3LTEyLTUwLTAzLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL1JvYm90QXJtLmR3Zng';
+                Autodesk.Viewing.Initializer(options, function onInitialized() {
+                    Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+                });
+
+                /**
+                 * Autodesk.Viewing.Document.load() success callback.
+                 * Proceeds with model initialization.
+                 */
+                function onDocumentLoadSuccess(doc) {
+                    // A document contains references to 3D and 2D viewables.
+                    var viewables = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), { 'type': 'geometry' }, true);
+                    if (viewables.length === 0) {
+                        console.error('Document contains no viewables.');
+                        return;
+                    }
+
+                    // Choose any of the avialble viewables
+                    var initialViewable = viewables[0];
+                    var svfUrl = doc.getViewablePath(initialViewable);
+                    var modelOptions = {
+                        sharedPropertyDbPath: doc.getPropertyDbPath()
+                    };
+
+                    var viewerDiv = document.getElementById('MyViewerDiv');
+                    viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv);
+                    viewer.start(svfUrl, modelOptions, onLoadModelSuccess, onLoadModelError);
+                }
+
+                /**
+                 * Autodesk.Viewing.Document.load() failuire callback.
+                 */
+                function onDocumentLoadFailure(viewerErrorCode) {
+                    alert('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
+                    console.error('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
+                }
+
+                /**
+                 * viewer.loadModel() success callback.
+                 * Invoked after the model's SVF has been initially loaded.
+                 * It may trigger before any geometry has been downloaded and displayed on-screen.
+                 */
+                function onLoadModelSuccess(model) {
+                    console.log('onLoadModelSuccess()!');
+                    console.log('Validate model loaded: ' + (viewer.model === model));
+                    console.log(model);
+                }
+
+                /**
+                 * viewer.loadModel() failure callback.
+                 * Invoked when there's an error fetching the SVF file.
+                 */
+                function onLoadModelError(viewerErrorCode) {
+                    console.error('onLoadModelError() - errorCode:' + viewerErrorCode);
+                }
+            </script>
+        </div>
+    </div>
+
+</body>
+
+</html>
